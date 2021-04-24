@@ -1,8 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Link from 'next/link'
 
-export default function Home({ trendingMovies }) {
+export default function Contato({ developerInfo }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -12,25 +11,13 @@ export default function Home({ trendingMovies }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Filmes Em Destaque!
+          <strong>Fale Comigo!</strong>
+          <br/>
+          <small>{developerInfo.Name}</small>
+          <br />
+          <small> <a href={developerInfo.LinkedIn}>LinkedIn </a></small>
+          <small> <a href={developerInfo.GitHub}>GitHub </a></small>
         </h1>
-        <hr/>
-        <Link href="/busca">Pesquisar</Link> 
-        <Link href="/contato">Contato</Link>
-        <hr/>
-        <ul>
-          {trendingMovies.map(item => (
-            <li key={item.id}>
-              <a href={`/movie/${item.id}`}>
-                <>
-                  <img src={`https://image.tmdb.org/t/p/original${item.poster_path}`} width="150px" />
-                  <br />
-                  {item.title}
-                </>
-              </a>
-            </li>
-          ))}
-        </ul>
       </main>
 
       <footer className={styles.footer}>
@@ -47,13 +34,13 @@ export default function Home({ trendingMovies }) {
   )
 }
 
-export async function getServerSideProps() {
-  const response = await fetch(`http://localhost:3000/api/trending`)
+export async function getStaticProps() {
+  const response = await fetch(`http://localhost:3000/api/developer`)
   const result = await response.json()
 
   return {
     props: {
-      trendingMovies: result.list
+      developerInfo: result
     }
   }
 }
